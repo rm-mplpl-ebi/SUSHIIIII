@@ -748,8 +748,8 @@
 
         (() => {
             const canvas = document.getElementById('canvas');
-            canvas.width = 800;
-            canvas.height = 800;
+            canvas.width = 1000;
+            canvas.height = 1000;
 
             const tagHistoryList = document.getElementById('history-list');
             document.getElementById('clear').addEventListener('click', () => {
@@ -758,6 +758,8 @@
             });
 
             const tagResult = document.getElementById('result');
+            const music = new Audio('nc38022.mp3');
+                music.play();
             const roulette = new Roulette({
                 list: ['1', '2', '3'],
                 x: canvas.width / 2,
@@ -782,8 +784,6 @@
             const startButton = document.getElementById('start');
             startButton.addEventListener('click', () => {
                 roulette.start();
-                const music = new Audio('nc38022.mp3');
-                music.play();
                 tagResult.classList.add('hidden');
             });
 
