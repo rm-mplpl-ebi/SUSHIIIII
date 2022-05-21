@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Roulette</title>
-
     <style>
         body {
             width: 95%;
             margin: 0;
             padding: 5px;
         }
-
         canvas {
             margin: auto;
             padding: 0;
@@ -22,76 +19,61 @@
             max-width: 400px;
             height: auto;
         }
-
         .flex-parent {
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
         }
-
         .flex-child {
             padding: 10px;
         }
-
         .roulette-area {
             text-align: center;
         }
-
         .roulette-controlls {
             min-width: 200px;
             max-width: 420px;
         }
-
         @media screen and (max-width:480px) {
             .roulette-controlls {
                 margin-left: auto;
                 margin-right: auto;
             }
         }
-
         .hidden {
             display: none;
         }
-
         .option {
             margin-top: 10px;
         }
-
         .footer {
             margin-top: 100px;
         }
-
         .scroll-area {
             max-height: 60vh;
             overflow: auto;
         }
-
         .license {
             margin-left: 2em;
         }
-
         #start {
             font-size: 2em;
             padding-left: 1em;
             padding-right: 1em;
         }
-
         #add {
             margin-top: 1em;
         }
-
         #list li {
             width: 100%;
             word-wrap: break-word;
             margin: 4px 0 4px 0;
         }
-
         #list li a {
             float: right;
             color: gray;
             text-decoration: none;
         }
-
         #result {
             position: absolute;
             top: 150px;
@@ -111,9 +93,7 @@
         }
     </style>
 </head>
-
 <body>
-
     <div class="flex-parent">
         <div class="flex-child roulette-area">
             <canvas id="canvas"></canvas>
@@ -135,13 +115,11 @@
                             <input type="submit" id="add" disabled="disabled" value="追加">
                         </form>
                     </div>
-
                     <div class="scroll-area">
                         <ul id="list">
                         </ul>
                     </div>
                 </fieldset>
-
                 <div class="option">
                      <fieldset>
                         <legend>回転の長さ</legend>
@@ -150,16 +128,32 @@
                         <label><input id="spin-long" name="spin" type="radio">長</label>
                     </fieldset>
                     <br>
-                  
+                    <label><input id="equally" type="checkbox">均等に出るモード</label><br>
                     <br>
-                    
-        
-                        
+
+
+
                     </fieldset>
                     <br>
+                    <label><input id="equally" type="checkbox">均等に出るモード</label><br>
                     <br>
-               
 
+
+
+    
+          
+            
+    
+
+          
+          
+            
+    
+
+          
+    
+    @@ -201,32 +200,9 @@
+  
                     <fieldset>
                         <legend>設定をブラウザに保存</legend>
                         <form action="#" method="get">
@@ -171,7 +165,6 @@
                             </div>
                         </form>
                     </fieldset>
-
                     <fieldset id="load-setting-fieldset" class="hidden">
                         <legend>設定をロード</legend>
                         <select id="setting-list" style="width: 100%"></select><br>
@@ -184,37 +177,65 @@
                 </div>
             </fieldset>
         </div>
-
         <div id="history" class="flex-child roulette-controlls">
             <fieldset>
                 <legend>履歴</legend>
-
                 <button id="clear">CLEAR</button>
                 <div id="history-list" class="scroll-area hidden">
                 </div>
             </fieldset>
         </div>
     </div>
-
     <div class="footer">
         <hr>
         <ul>
             <li>説明
-               
+                <ul>
+                    <li>「均等に出るモード」にすると、一度出たマスは他のマスがすべて出るまで出なくなります。</li>
+                    <li>「設定をブラウザに保存」をすると、「設定」枠内の内容をブラウザに保存します。<br>
+                        ブラウザに保存するので、保存した設定情報を他のブラウザや他のデバイスとは共有できません。</li>
+                </ul>
             </li>
-            
+            <li>ライセンス
+                <div class="license">
+                    <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                        <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">
+                            <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;"
+                                alt="CC0" />
+                        </a>
+                        <br />
+                        To the extent possible under law,
+                        <a rel="dct:publisher"
+                            href="https://github.com/shining-corn">https://github.com/shining-corn</a>
+                        has waived all copyright and related or neighboring rights to
+                        this work.
+                        This work is published from:
+                        <span property="vcard:Country" datatype="dct:ISO3166" content="JP"
+                            about="https://github.com/shining-corn">
+                            日本</span>.
+                    </p>
+                </div>
+            </li>
             <li>
                 <a href="https://github.com/shining-corn/roulette">ソースコード</a>
             </li>
+
+    
+          
+            
+    
+
+          
+    
+    
+  
         </ul>
     </div>
-
     <script>
         class Animation {
             constructor(callback) {
                 this.callback = callback;
             }
-
             run() {
                 const func = (ts) => {
                     this.callback(ts);
@@ -223,7 +244,6 @@
                 window.requestAnimationFrame((ts) => func(ts));
             }
         }
-
         class ColorGenerator {
             static getColors(num) {
                 let colors = [];
@@ -231,28 +251,23 @@
                     const hue = i * 360 / num;
                     colors[i] = `hsl(${hue},90%,50%)`;
                 }
-
                 return colors;
             }
         }
-
         class List {
             constructor() {
                 this.listReceiver = null;
                 this.tagAddButton = document.getElementById('add');
                 this.tagItem = document.getElementById('item');
                 this.tagList = document.getElementById('list');
-
                 this.tagAddButton.addEventListener('click', (event) => {
                     this._addItem(this.tagItem.value);
                     this.tagItem.value = '';
                     this._onChangeText(event, this.tagAddButton);
                     this.tagItem.focus();
-
                     event.preventDefault();
                     return false;
                 });
-
                 this.tagItem.addEventListener('change', (event) => {
                     this._onChangeText(event, this.tagAddButton);
                 });
@@ -263,7 +278,6 @@
                     this._onChangeText(event, this.tagAddButton);
                 });
             }
-
             init() {
                 this._addItem('まぐろ');
                 this._addItem('サーモン');
@@ -284,11 +298,9 @@
                 this._addItem('とびっこ');
                 this._addItem('たらこ');
             }
-
             isEmpty() {
                 return this.tagList.children.length == 0;
             }
-
             _onChangeText(event, tag) {
                 if (event.target.value.length) {
                     tag.removeAttribute('disabled');
@@ -297,63 +309,49 @@
                     tag.setAttribute('disabled', 'disabled');
                 }
             }
-
             _addItem(text) {
                 const newListItem = document.createElement('li');
                 const itemText = document.createElement('span');
                 itemText.innerText = text;
-
                 const removeButton = document.createElement('a');
                 removeButton.innerHTML = '&#x2716;';
                 removeButton.href = '#';
                 removeButton.addEventListener('click', (event) => {
                     event.target.parentNode.remove();
                     this.listReceiver.setList(this._makeList());
-
                     event.preventDefault();
-
                     if (this.postChangeList) {
                         this.postChangeList();
                     }
-
                     return false;
                 });
-
                 newListItem.appendChild(itemText);
                 newListItem.appendChild(removeButton);
                 this.tagList.appendChild(newListItem);
-
                 this.listReceiver.setList(this._makeList());
-
                 if (this.postChangeList) {
                     this.postChangeList();
                 }
             }
-
             _clearItem() {
                 while (this.tagList.firstChild) {
                     this.tagList.removeChild(this.tagList.firstChild);
                 }
-
                 this.listReceiver.setList([]);
                 if (this.postChangeList) {
                     this.postChangeList();
                 }
             }
-
             _makeList() {
                 const list = [];
                 for (let i = 0; i < this.tagList.children.length; i++) {
                     list[i] = this.tagList.children[i].children[0].innerText;
                 }
-
                 return list;
             }
-
             getSetting() {
                 return this._makeList();
             }
-
             setSetting(setting) {
                 this._clearItem();
                 for (const item of setting) {
@@ -361,7 +359,6 @@
                 }
             }
         }
-
         class Roulette {
             constructor(args) {
                 this.x = args.x;
@@ -369,7 +366,6 @@
                 this.radius = args.radius;
                 this.list = args.list;   // [string] ルーレットの選択肢
                 this.onStop = args.onStop;  // ルーレット停止時の処理
-
                 this.angle = 0;
                 this.arcDegree = 0;
                 this.velocity = 0;
@@ -377,7 +373,6 @@
                 this.entropyMode = document.getElementById('equally').checked;
                 this.entropies = [];
                 this.lastSelected = null;
-
                 if (document.getElementById('spin-short').checked) {
                     this.spinMode = 'spin-short';
                 }
@@ -388,7 +383,6 @@
                     this.spinMode = 'spin-long';
                 }
             }
-
             setEntropyMode(mode) {
                 this.entropyMode = mode;
                 if (mode === false) {
@@ -399,7 +393,6 @@
                     this.lastSelected = null;
                 }
             }
-
             setList(list) {
                 this.list = list;
                 this.entropies = [];
@@ -408,30 +401,24 @@
                 }
                 this.lastSelected = null;
             }
-
             start() {
                 if (this.velocity == 0) {
                     this.removeLastItem();
-
                     this.velocity = this.spinMode === 'spin-long' ? 10 : 20;
                     this.decelerationPoint = Math.random() * 360;
                 }
             }
-
             removeLastItem() {
                 if (this.entropyMode && this.lastSelected != null) {
                     this.entropies[this.lastSelected] = 0;
-
                     if (this.entropies.reduce((previousValue, currentValue) => previousValue + currentValue) == 0) {
                         for (let i = 0; i < this.entropies.length; i++) {
                             this.entropies[i] = 1;
                         }
                     }
-
                     this.lastSelected = null;
                 }
             }
-
             do() {
                 if (this.list.length == 0) {
                     this.velocity = 0;
@@ -439,7 +426,6 @@
                 }
                 if (this.velocity > 0) {
                     const deceleration = this.spinMode === 'spin-long' ? (-0.8 * (Math.random() * 0.004 + 0.012)) : (this.spinMode === 'spin-middle' ? -0.075 : -20);
-
                     if (this.acceleration == 0) {
                         if (this.decelerationPoint + 10 < 360) {
                             if ((this.decelerationPoint <= this.arcDegree) && (this.arcDegree < this.decelerationPoint + 10)) {
@@ -452,18 +438,15 @@
                             this.arcDegree += (this.decelerationPoint % 10) + parseFloat("0." + (String(this.decelerationPoint)).split(".")[1]);
                         }
                     }
-
                     this.velocity += this.acceleration;
                     if (this.velocity <= 0) {
                         this.velocity = 0;
                         this.acceleration = 0;
                         this._onStop();
                     }
-
                     this._rotate();
                 }
             }
-
             draw(canvas) {
                 const ctx = canvas.getContext('2d');
                 let angleBySlice;
@@ -474,21 +457,16 @@
                 else {
                     angleBySlice = 2 * Math.PI / this.list.length;
                 }
-
                 const colors = ColorGenerator.getColors(this.list.length);
-
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 let sliceIndex = 0;
                 for (let i = 0; i < this.list.length; i++) {
                     if (this.entropyMode && this.entropies[i] == 0) {
                         continue;
                     }
-
                     ctx.save();
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle + angleBySlice * sliceIndex);
-
                     ctx.beginPath();
                     ctx.lineTo(this.radius, 0);
                     if (angleBySlice != 2 * Math.PI) {
@@ -501,16 +479,13 @@
                     ctx.fillStyle = colors[i];
                     ctx.fill();
                     ctx.closePath();
-
                     if (angleBySlice != 2 * Math.PI) {
                         ctx.strokeStyle = 'white';
                         ctx.lineWidth = 10;
                         ctx.lineJoin = 'round';
                         ctx.stroke();
                     }
-
                     ctx.clip();
-
                     ctx.beginPath();
                     ctx.fillStyle = 'white';
                     ctx.textBaseline = 'middle';
@@ -529,12 +504,9 @@
                         ctx.fillText(text, 28, 0);
                     }
                     ctx.closePath();
-
                     ctx.restore();
-
                     sliceIndex++;
                 }
-
                 ctx.beginPath();
                 ctx.fillStyle = 'black';
                 ctx.moveTo(this.x - 20, 2);
@@ -544,12 +516,10 @@
                 ctx.fill();
                 ctx.closePath();
             }
-
             _rotate() {
                 this.arcDegree = (this.arcDegree + (this.velocity > 10 ? 10 : this.velocity)) % 360;
                 this.angle = this.arcDegree * Math.PI / 180;
             }
-
             _onStop() {
                 let degreeBySlice;
                 if (this.entropyMode) {
@@ -560,7 +530,6 @@
                     degreeBySlice = 360 / this.list.length;
                 }
                 let selected = (Math.floor((360 - ((this.arcDegree + 90) % 360)) / degreeBySlice)) % this.list.length;
-
                 if (this.entropyMode) {
                     for (let i = 0; i < this.entropies.length; i++) {
                         if (this.entropies[i] == 1) {
@@ -571,58 +540,46 @@
                             break;
                         }
                     }
-
                     this.lastSelected = selected;
                 }
-
                 this.onStop(this.list[selected]);
             }
-
             getSetting() {
                 return {
                     spinMode: this.spinMode,
                     entropyMode: this.entropyMode
                 }
             }
-
             setSetting(setting) {
                 this.spinMode = setting.spinMode;
                 document.getElementById('spin-short').checked = this.spinMode === 'spin-short';
                 document.getElementById('spin-middle').checked = this.spinMode === 'spin-middle';
                 document.getElementById('spin-long').checked = this.spinMode === 'spin-long';
-
                 this.entropyMode = setting.entropyMode;
                 document.getElementById('equally').checked = this.entropyMode;
             }
         }
-
         class SettingsStrage {
             constructor(roulette, list) {
                 this.roulette = roulette;
                 this.list = list;
-
                 this.tagName = document.getElementById('setting-name');
                 this.tagSubmit = document.getElementById('save-setting');
                 this.tagLoadFieldSet = document.getElementById('load-setting-fieldset');
                 this.tagSettingList = document.getElementById('setting-list');
                 this.tagLoadSetting = document.getElementById('load-setting');
                 this.tagDeleteSetting = document.getElementById('delete-setting');
-
                 this.tagName.addEventListener('change', this._getSettingNameEventHandler());
                 this.tagName.addEventListener('input', this._getSettingNameEventHandler());
                 this.tagName.addEventListener('keyup', this._getSettingNameEventHandler());
-
                 this.tagSubmit.addEventListener('click', this._getSubmitHandler());
-
                 this.tagLoadSetting.addEventListener('click', this._getLoadSettingHandler());
                 this.tagDeleteSetting.addEventListener('click', this._getDeleteSettingHandler());
-
                 const rouletteSettings = this._loadFromLocalStorage();
                 if (rouletteSettings.length) {
                     this._updateOpenList(rouletteSettings);
                 }
             }
-
             _saveToLocalStorage(rouletteSettings) {
                 try {
                     localStorage.setItem('roulette-settings', JSON.stringify(rouletteSettings));
@@ -632,11 +589,9 @@
                 }
                 return true;
             }
-
             _loadFromLocalStorage() {
                 return JSON.parse(localStorage.getItem('roulette-settings') ?? "[]");
             }
-
             _getSettingNameEventHandler() {
                 return (event) => {
                     if (event.target.value.length) {
@@ -647,18 +602,15 @@
                     }
                 }
             }
-
             _getSubmitHandler() {
                 return (event) => {
                     const name = this.tagName.value;
                     this.tagName.value = '';
                     this.tagSubmit.setAttribute('disabled', 'disabled');
-
                     const setting = {
                         roulette: this.roulette.getSetting(),
                         list: this.list.getSetting()
                     };
-
                     const rouletteSettings = this._loadFromLocalStorage();
                     rouletteSettings.push({ name, setting });
                     if (!this._saveToLocalStorage(rouletteSettings)) {
@@ -667,30 +619,24 @@
                         return false;
                     }
                     alert('保存しました');
-
                     this._updateOpenList(rouletteSettings);
                     this.tagSettingList.options[this.tagSettingList.options.length - 1].selected = true;
-
                     event.preventDefault();
                     return false;
                 }
             }
-
             _updateOpenList(newSettings) {
                 while (this.tagSettingList.firstChild) {
                     this.tagSettingList.removeChild(this.tagSettingList.firstChild);
                 }
-
                 for (const setting of newSettings) {
                     const newOption = document.createElement('option');
                     newOption.value = setting.name;
                     newOption.innerText = setting.name;
                     this.tagSettingList.appendChild(newOption);
                 }
-
                 this.tagLoadFieldSet.classList.remove('hidden');
             }
-
             _getLoadSettingHandler() {
                 return (event) => {
                     const rouletteSettings = this._loadFromLocalStorage();
@@ -699,21 +645,17 @@
                     this.list.setSetting(rouletteSettings[index].setting.list);
                 }
             }
-
             _getDeleteSettingHandler() {
                 return (event) => {
                     const tagSelectList = document.getElementById('setting-list');
                     const message = tagSelectList.value + "を削除しますか？";
                     const result = window.confirm(message);
-
                     if (result) {
                         const rouletteSettings = this._loadFromLocalStorage()
                         const index = tagSelectList.selectedIndex;
                         rouletteSettings.splice(index, 1);
-
                         this._saveToLocalStorage(rouletteSettings);
                         this._updateOpenList(rouletteSettings);
-
                         if (rouletteSettings.length === 0) {
                             this.tagLoadFieldSet.classList.add('hidden');
                         }
@@ -721,18 +663,15 @@
                 }
             }
         }
-
         (() => {
             const canvas = document.getElementById('canvas');
             canvas.width = 1200;
             canvas.height = 1200;
-
             const tagHistoryList = document.getElementById('history-list');
             document.getElementById('clear').addEventListener('click', () => {
                 tagHistoryList.classList.add('hidden');
                 document.getElementById('history-list').innerText = '';
             });
-
             const tagResult = document.getElementById('result');
             const roulette = new Roulette({
                 list: ['1', '2', '3'],
@@ -744,31 +683,26 @@
                     music.play();
                     tagResult.children[0].innerText = selectedItem;
                     tagResult.classList.remove('hidden');
-
                     const history = document.createElement('div');
                     history.innerText = selectedItem;
                     document.getElementById('history-list').appendChild(history);
                     tagHistoryList.classList.remove('hidden');
                 },
             });
-
             tagResult.children[1].addEventListener('click', () => {
                 roulette.removeLastItem();
                 tagResult.classList.add('hidden');
             });
-
             const startButton = document.getElementById('start');
             startButton.addEventListener('click', () => {
                 roulette.start();
                 tagResult.classList.add('hidden');
             });
-
             const list = new List();
             list.listReceiver = roulette;
             list.init();
             list.postChangeList = () => {
                 tagResult.classList.add('hidden');
-
                 if (list.isEmpty()) {
                     startButton.setAttribute('disabled', 'disabled');
                 }
@@ -776,37 +710,29 @@
                     startButton.removeAttribute('disabled');
                 }
             };
-
             const tagEqually = document.getElementById('equally');
             tagEqually.addEventListener('click', (event) => {
                 roulette.setEntropyMode(event.target.checked);
             });
-
             const tagSpinShort = document.getElementById('spin-short');
             tagSpinShort.addEventListener('click', (event) => {
                 roulette.spinMode = 'spin-short';
             });
-
             const tagSpinMiddle = document.getElementById('spin-middle');
             tagSpinMiddle.addEventListener('click', (event) => {
                 roulette.spinMode = 'spin-middle';
             });
-
             const tagSpinLong = document.getElementById('spin-long');
             tagSpinLong.addEventListener('click', (event) => {
                 roulette.spinMode = 'spin-long';
             });
-
             const animation = new Animation((args) => {
                 roulette.do();
                 roulette.draw(canvas);
             });
-
             const settingStrage = new SettingsStrage(roulette, list);
-
             animation.run();
         })();
     </script>
 </body>
-
 </html>
