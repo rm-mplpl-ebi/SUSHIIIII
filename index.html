@@ -100,8 +100,15 @@
             <div id="result" class="hidden">
                 <div></div><button>OK</button>
             </div>
+            <script>
+                 function countSecond() {
+                    const music = new Audio('nc38022.mp3'); //スマホだと何かしら操作入れないと再生されない
+                    music.play();
+                    setTimeout(nextpages, 12000)
+      }
+            </script>
             <div>
-                <button id="start">START</button>
+                <button id="start" onclick="setTimeout('countSecond()',5000);">START</button>
             </div>
         </div>
         <div class="flex-child roulette-controlls">
@@ -634,8 +641,8 @@
                 y: canvas.height / 2 + 20,
                 radius: Math.min(canvas.width, canvas.height) / 2.1,
                 onStop: (selectedItem) => {
-                    const music = new Audio('nc38022.mp3');
-                    music.play();
+                    //const music = new Audio('nc38022.mp3'); スマホだと何かしら操作入れないと再生されない
+                    //music.play();
                     tagResult.children[0].innerText = selectedItem;
                     tagResult.classList.remove('hidden');
                     const history = document.createElement('div');
