@@ -774,6 +774,8 @@
             const startButton = document.getElementById('start');
             startButton.addEventListener('click', () => {
                 roulette.start();
+                const music = new Audio('music.mp3');
+                music.play();
                 tagResult.classList.add('hidden');
             });
 
